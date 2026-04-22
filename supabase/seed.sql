@@ -25,44 +25,46 @@ BEGIN
     raw_app_meta_data, raw_user_meta_data, is_super_admin,
     confirmation_token, recovery_token, email_change, email_change_token_new
   ) VALUES
-    ('00000000-0000-0000-0000-000000000000', owner1_uid,   'authenticated', 'authenticated', 'owner1@printsari.com',   crypt('owner123',   gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
-    ('00000000-0000-0000-0000-000000000000', owner2_uid,   'authenticated', 'authenticated', 'owner2@printsari.com',   crypt('owner123',   gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
-    ('00000000-0000-0000-0000-000000000000', cashier1_uid, 'authenticated', 'authenticated', 'cashier1@printsari.com', crypt('cashier123', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
-    ('00000000-0000-0000-0000-000000000000', cashier2_uid, 'authenticated', 'authenticated', 'cashier2@printsari.com', crypt('cashier123', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
-    ('00000000-0000-0000-0000-000000000000', cashier3_uid, 'authenticated', 'authenticated', 'cashier3@printsari.com', crypt('cashier123', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', '');
+    ('00000000-0000-0000-0000-000000000000', owner1_uid,   'authenticated', 'authenticated', 'owner1@printsari.internal',   crypt('owner123',   gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
+    ('00000000-0000-0000-0000-000000000000', owner2_uid,   'authenticated', 'authenticated', 'owner2@printsari.internal',   crypt('owner123',   gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
+    ('00000000-0000-0000-0000-000000000000', cashier1_uid, 'authenticated', 'authenticated', 'cashier1@printsari.internal', crypt('cashier123', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
+    ('00000000-0000-0000-0000-000000000000', cashier2_uid, 'authenticated', 'authenticated', 'cashier2@printsari.internal', crypt('cashier123', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', ''),
+    ('00000000-0000-0000-0000-000000000000', cashier3_uid, 'authenticated', 'authenticated', 'cashier3@printsari.internal', crypt('cashier123', gen_salt('bf')), NOW(), NOW(), NOW(), '{"provider":"email","providers":["email"]}', '{}', false, '', '', '', '');
 
   INSERT INTO auth.identities (id, user_id, provider_id, identity_data, provider, created_at, updated_at, last_sign_in_at)
   VALUES
-    (gen_random_uuid(), owner1_uid,   'owner1@printsari.com',   jsonb_build_object('sub', owner1_uid::text,   'email', 'owner1@printsari.com'),   'email', NOW(), NOW(), NOW()),
-    (gen_random_uuid(), owner2_uid,   'owner2@printsari.com',   jsonb_build_object('sub', owner2_uid::text,   'email', 'owner2@printsari.com'),   'email', NOW(), NOW(), NOW()),
-    (gen_random_uuid(), cashier1_uid, 'cashier1@printsari.com', jsonb_build_object('sub', cashier1_uid::text, 'email', 'cashier1@printsari.com'), 'email', NOW(), NOW(), NOW()),
-    (gen_random_uuid(), cashier2_uid, 'cashier2@printsari.com', jsonb_build_object('sub', cashier2_uid::text, 'email', 'cashier2@printsari.com'), 'email', NOW(), NOW(), NOW()),
-    (gen_random_uuid(), cashier3_uid, 'cashier3@printsari.com', jsonb_build_object('sub', cashier3_uid::text, 'email', 'cashier3@printsari.com'), 'email', NOW(), NOW(), NOW());
+    (gen_random_uuid(), owner1_uid,   'owner1@printsari.internal',   jsonb_build_object('sub', owner1_uid::text,   'email', 'owner1@printsari.internal'),   'email', NOW(), NOW(), NOW()),
+    (gen_random_uuid(), owner2_uid,   'owner2@printsari.internal',   jsonb_build_object('sub', owner2_uid::text,   'email', 'owner2@printsari.internal'),   'email', NOW(), NOW(), NOW()),
+    (gen_random_uuid(), cashier1_uid, 'cashier1@printsari.internal', jsonb_build_object('sub', cashier1_uid::text, 'email', 'cashier1@printsari.internal'), 'email', NOW(), NOW(), NOW()),
+    (gen_random_uuid(), cashier2_uid, 'cashier2@printsari.internal', jsonb_build_object('sub', cashier2_uid::text, 'email', 'cashier2@printsari.internal'), 'email', NOW(), NOW(), NOW()),
+    (gen_random_uuid(), cashier3_uid, 'cashier3@printsari.internal', jsonb_build_object('sub', cashier3_uid::text, 'email', 'cashier3@printsari.internal'), 'email', NOW(), NOW(), NOW());
 
-  INSERT INTO profiles (user_id, username, role_id, name, phone, address_city, address_province, address_country)
+  INSERT INTO profiles (user_id, username, role_id, name, phone, address_city, address_province, address_country, is_active)
   VALUES
-    (owner1_uid,   'daniel_owner',  owner_role_id,   'Daniel David Lupase', '09171111001', 'Lipa', 'Batangas', 'Philippines'),
-    (owner2_uid,   'jose_owner',    owner_role_id,   'Jose Reyes',          '09171111002', 'Lipa', 'Batangas', 'Philippines'),
-    (cashier1_uid, 'maria_cashier', cashier_role_id, 'Maria Santos',        '09171111003', 'Lipa', 'Batangas', 'Philippines'),
-    (cashier2_uid, 'pedro_cashier', cashier_role_id, 'Pedro Garcia',        '09171111004', 'Lipa', 'Batangas', 'Philippines'),
-    (cashier3_uid, 'ana_cashier',   cashier_role_id, 'Ana Cruz',            '09171111005', 'Lipa', 'Batangas', 'Philippines');
+    (owner1_uid,   'daniel_owner',  owner_role_id,   'Daniel David Lupase', '09171111001', 'Lipa', 'Batangas', 'Philippines', true),
+    (owner2_uid,   'jose_owner',    owner_role_id,   'Jose Reyes',          '09171111002', 'Lipa', 'Batangas', 'Philippines', true),
+    (cashier1_uid, 'maria_cashier', cashier_role_id, 'Maria Santos',        '09171111003', 'Lipa', 'Batangas', 'Philippines', true),
+    (cashier2_uid, 'pedro_cashier', cashier_role_id, 'Pedro Garcia',        '09171111004', 'Lipa', 'Batangas', 'Philippines', true),
+    (cashier3_uid, 'ana_cashier',   cashier_role_id, 'Ana Cruz',            '09171111005', 'Lipa', 'Batangas', 'Philippines', true);
 END $$;
 
 -- =============================================
 -- 2. PRODUCTS (store category = 1)
+--    purchase_price = cost to buy; selling_price = price we sell at
 -- =============================================
-INSERT INTO products (name, description, category_id, purchase_price, sku) VALUES
-  ('Yellow Pad Short',     'Short bond yellow pad paper',   1, 18.00, 'SKU-001'),
-  ('Ballpen Black',        'Black ballpoint pen',           1,  4.00, 'SKU-002'),
-  ('Correction Tape',      'White correction tape roller',  1, 11.00, 'SKU-003'),
-  ('Pandesal (pack 12)',   'Fresh baked bread pack of 12',  1, 25.00, 'SKU-004'),
-  ('Coffee 3-in-1 sachet', 'Instant 3-in-1 coffee sachet', 1,  4.00, 'SKU-005'),
-  ('Mug (ceramic white)',  'Plain white ceramic mug',       1, 60.00, 'SKU-006');
+INSERT INTO products (name, description, category_id, purchase_price, selling_price, perishable, sku) VALUES
+  ('Yellow Pad Short',     'Short bond yellow pad paper',   1, 18.00,  35.00, false, 'SKU-001'),
+  ('Ballpen Black',        'Black ballpoint pen',           1,  4.00,  12.00, false, 'SKU-002'),
+  ('Correction Tape',      'White correction tape roller',  1, 11.00,  22.00, false, 'SKU-003'),
+  ('Pandesal (pack 12)',   'Fresh baked bread pack of 12',  1, 25.00,  45.00, true,  'SKU-004'),
+  ('Coffee 3-in-1 sachet', 'Instant 3-in-1 coffee sachet', 1,  4.00,   8.00, true,  'SKU-005'),
+  ('Mug (ceramic white)',  'Plain white ceramic mug',       1, 60.00, 120.00, false, 'SKU-006');
 
 -- =============================================
 -- 3. PRINT SERVICES
 -- paper_size_id: 1=short, 2=long, 3=a4
 -- color_mode_id: 1=bw, 2=colored
+-- machine_id and service_supply_id are linked in the DO block below
 -- =============================================
 INSERT INTO print_services (name, description, paper_size_id, color_mode_id, base_price, ink_cost_per_page, paper_cost_per_page, electricity_cost_per_page, maintenance_cost_per_page, total_cost_per_page) VALUES
   ('Photocopy B&W Short', 'Black and white photocopy on short bond', 1, 1,  3.00, 0.20, 0.10, 0.02, 0.01, 0.33),
@@ -72,7 +74,28 @@ INSERT INTO print_services (name, description, paper_size_id, color_mode_id, bas
   ('Photocopy B&W Long',  'Black and white photocopy on long bond',  2, 1,  4.00, 0.20, 0.15, 0.02, 0.01, 0.38);
 
 -- =============================================
--- 4. CUSTOMERS
+-- 4. SERVICE SUPPLIES (ink, paper for print shop)
+-- =============================================
+INSERT INTO service_supplies (name, supply_type, paper_size, purchase_price) VALUES
+  ('Short Bond Paper (Ream)',   'paper',     'short', 160.00),
+  ('Long Bond Paper (Ream)',    'paper',     'long',  180.00),
+  ('A4 Bond Paper (Ream)',      'paper',     'a4',    160.00),
+  ('Glossy Photo Paper (Pack)', 'paper',     'a4',    350.00),
+  ('Epson Black Ink (T664)',    'ink',       NULL,    280.00),
+  ('Epson Cyan Ink (T664)',     'ink',       NULL,    320.00),
+  ('Epson Magenta Ink (T664)',  'ink',       NULL,    320.00),
+  ('Epson Yellow Ink (T664)',   'ink',       NULL,    320.00);
+
+-- =============================================
+-- 5. MACHINES
+-- =============================================
+INSERT INTO machines (name, is_active) VALUES
+  ('Epson L3110 (BW/Color)', true),
+  ('Canon PIXMA iP110',      true),
+  ('Epson L120 (Backup)',    false);
+
+-- =============================================
+-- 6. CUSTOMERS
 -- =============================================
 INSERT INTO customers (name, email, phone, address, notes) VALUES
   ('Juan Dela Cruz', 'juan@email.com',       '09181112222', 'Brgy. San Jose, Lipa, Batangas',    'Regular customer'),
@@ -82,7 +105,7 @@ INSERT INTO customers (name, email, phone, address, notes) VALUES
   ('Carlos Tan',     'carlos.t@email.com',   '09229990000', 'Brgy. Balintawak, Lipa, Batangas',  'Office supplies buyer');
 
 -- =============================================
--- 5. ACTIVITY ACTIONS (additional seed entries)
+-- 7. ACTIVITY ACTIONS
 -- =============================================
 INSERT INTO activity_actions (action_name, category) VALUES
   ('Transaction Completed', 'transaction'),
@@ -97,27 +120,41 @@ INSERT INTO activity_actions (action_name, category) VALUES
 ON CONFLICT DO NOTHING;
 
 -- =============================================
--- 6. INVENTORY, PRINT ORDERS, TRANSACTIONS,
---    TRANSACTION ITEMS, EXPENSES, ACTIVITY LOGS
+-- 8. INVENTORY, STOCK_IN, STOCK_OUT,
+--    PRINT ORDERS, TRANSACTIONS,
+--    TRANSACTION ITEMS, EXPENSES,
+--    LOGIN HISTORY, ACTIVITY LOGS
 -- =============================================
 DO $$
 DECLARE
   -- Product IDs
   p_ypad int8; p_pen  int8; p_tape int8;
   p_pan  int8; p_cof  int8; p_mug  int8;
+  -- Service Supply IDs
+  ss_short int8; ss_long int8; ss_a4   int8;
+  ss_photo int8; ss_bk   int8; ss_cy   int8;
+  -- Stock_In IDs (one per product restock)
+  si_ypad int8; si_pen  int8; si_tape int8;
+  si_pan  int8; si_cof  int8; si_mug  int8;
   -- Inventory IDs
   inv_ypad int8; inv_pen  int8; inv_tape int8;
   inv_pan  int8; inv_cof  int8; inv_mug  int8;
   -- Print service IDs
-  ps_bw_short int8; ps_bw_a4 int8; ps_col_a4 int8; ps_photo int8;
+  ps_bw_short int8; ps_bw_a4 int8; ps_col_a4 int8; ps_photo int8; ps_bw_long int8;
+  -- Machine IDs
+  mach_epson int8; mach_canon int8;
+  -- Supply inventory item IDs
+  inv_ss_short int8; inv_ss_a4 int8; inv_ss_bk int8; inv_ss_cy int8;
   -- Print order IDs
   po1 int8; po2 int8; po3 int8; po4 int8; po5 int8;
-  -- Cashier profile ID
-  cashier_pid int8;
+  -- Profile IDs
+  cashier_pid int8; owner_pid int8;
   -- Transaction IDs
   txn1  int8; txn2  int8; txn3  int8; txn4  int8;
   txn5  int8; txn6  int8; txn7  int8; txn8  int8;
   txn9  int8; txn10 int8; txn11 int8;
+  -- Transaction Item IDs (for stock_out)
+  ti_txn1_pan int8; ti_txn1_cof int8; ti_txn3_pan int8;
   -- Customer IDs
   cust1 int8; cust2 int8; cust3 int8; cust4 int8; cust5 int8;
   -- Lookup IDs
@@ -138,14 +175,28 @@ BEGIN
   SELECT id INTO p_cof  FROM products WHERE sku = 'SKU-005';
   SELECT id INTO p_mug  FROM products WHERE sku = 'SKU-006';
 
+  -- Resolve service supply IDs
+  SELECT id INTO ss_short FROM service_supplies WHERE name = 'Short Bond Paper (Ream)';
+  SELECT id INTO ss_long  FROM service_supplies WHERE name = 'Long Bond Paper (Ream)';
+  SELECT id INTO ss_a4    FROM service_supplies WHERE name = 'A4 Bond Paper (Ream)';
+  SELECT id INTO ss_photo FROM service_supplies WHERE name = 'Glossy Photo Paper (Pack)';
+  SELECT id INTO ss_bk    FROM service_supplies WHERE name = 'Epson Black Ink (T664)';
+  SELECT id INTO ss_cy    FROM service_supplies WHERE name = 'Epson Cyan Ink (T664)';
+
   -- Resolve print service IDs
   SELECT id INTO ps_bw_short FROM print_services WHERE name = 'Photocopy B&W Short';
   SELECT id INTO ps_bw_a4    FROM print_services WHERE name = 'Print B&W A4';
   SELECT id INTO ps_col_a4   FROM print_services WHERE name = 'Print Colored A4';
   SELECT id INTO ps_photo    FROM print_services WHERE name = 'Print Photo 4R';
+  SELECT id INTO ps_bw_long  FROM print_services WHERE name = 'Photocopy B&W Long';
 
-  -- Resolve cashier profile ID
+  -- Resolve machine IDs
+  SELECT id INTO mach_epson FROM machines WHERE name = 'Epson L3110 (BW/Color)';
+  SELECT id INTO mach_canon FROM machines WHERE name = 'Canon PIXMA iP110';
+
+  -- Resolve profile IDs
   SELECT id INTO cashier_pid FROM profiles WHERE username = 'maria_cashier';
+  SELECT id INTO owner_pid   FROM profiles WHERE username = 'daniel_owner';
 
   -- Resolve customer IDs
   SELECT id INTO cust1 FROM customers WHERE email = 'juan@email.com';
@@ -154,14 +205,72 @@ BEGIN
   SELECT id INTO cust4 FROM customers WHERE email = 'rosa.m@email.com';
   SELECT id INTO cust5 FROM customers WHERE email = 'carlos.t@email.com';
 
-  -- Inventory items
-  INSERT INTO inventory_items (product_id, stock, retail_price, reorder_level, location, last_restocked) VALUES
-    (p_ypad, 48,  35.00,  10, 'Shelf A1', NOW() - INTERVAL '3 days'),
-    (p_pen,  120, 12.00,  20, 'Shelf A2', NOW() - INTERVAL '1 day'),
-    (p_tape, 35,  25.00,  10, 'Shelf A3', NOW() - INTERVAL '5 days'),
-    (p_pan,  200, 45.00,  30, 'Shelf B1', NOW() - INTERVAL '2 days'),
-    (p_cof,  75,   8.00,  15, 'Shelf B2', NOW() - INTERVAL '4 days'),
-    (p_mug,  5,  120.00,  10, 'Shelf C1', NOW() - INTERVAL '10 days');
+  -- =============================================
+  -- STOCK_IN records (initial restock of all store products)
+  -- =============================================
+  INSERT INTO stock_in (product_id, user_id, purchase_price, quantity_added, stock_in_date)
+  VALUES (p_ypad, owner_pid,   18.00,  60, NOW() - INTERVAL '7 days')
+  RETURNING id INTO si_ypad;
+
+  INSERT INTO stock_in (product_id, user_id, purchase_price, quantity_added, stock_in_date)
+  VALUES (p_pen,  owner_pid,    4.00, 150, NOW() - INTERVAL '6 days')
+  RETURNING id INTO si_pen;
+
+  INSERT INTO stock_in (product_id, user_id, purchase_price, quantity_added, stock_in_date)
+  VALUES (p_tape, owner_pid,   11.00,  40, NOW() - INTERVAL '5 days')
+  RETURNING id INTO si_tape;
+
+  INSERT INTO stock_in (product_id, user_id, purchase_price, quantity_added, stock_in_date)
+  VALUES (p_pan,  cashier_pid, 25.00, 250, NOW() - INTERVAL '4 days')
+  RETURNING id INTO si_pan;
+
+  INSERT INTO stock_in (product_id, user_id, purchase_price, quantity_added, stock_in_date)
+  VALUES (p_cof,  cashier_pid,  4.00, 100, NOW() - INTERVAL '4 days')
+  RETURNING id INTO si_cof;
+
+  INSERT INTO stock_in (product_id, user_id, purchase_price, quantity_added, stock_in_date)
+  VALUES (p_mug,  owner_pid,   60.00,   5, NOW() - INTERVAL '10 days')
+  RETURNING id INTO si_mug;
+
+  -- Service supply stock_in records
+  INSERT INTO stock_in (service_supply_id, user_id, purchase_price, quantity_added, stock_in_date) VALUES
+    (ss_short, owner_pid, 160.00, 10, NOW() - INTERVAL '6 days'),
+    (ss_a4,    owner_pid, 160.00,  5, NOW() - INTERVAL '6 days'),
+    (ss_bk,    owner_pid, 280.00,  4, NOW() - INTERVAL '6 days'),
+    (ss_cy,    owner_pid, 320.00,  2, NOW() - INTERVAL '6 days');
+
+  -- =============================================
+  -- INVENTORY ITEMS — SUPPLIES
+  -- Stock unit = reams (paper) / bottles (ink)
+  -- =============================================
+  INSERT INTO inventory_items (service_supply_id, stock, retail_price, last_restocked) VALUES
+    (ss_short, 10, 160.00, NOW() - INTERVAL '6 days'),
+    (ss_a4,     5, 160.00, NOW() - INTERVAL '6 days'),
+    (ss_bk,     4, 280.00, NOW() - INTERVAL '6 days'),
+    (ss_cy,     2, 320.00, NOW() - INTERVAL '6 days');
+
+  SELECT id INTO inv_ss_short FROM inventory_items WHERE service_supply_id = ss_short;
+  SELECT id INTO inv_ss_a4    FROM inventory_items WHERE service_supply_id = ss_a4;
+  SELECT id INTO inv_ss_bk    FROM inventory_items WHERE service_supply_id = ss_bk;
+  SELECT id INTO inv_ss_cy    FROM inventory_items WHERE service_supply_id = ss_cy;
+
+  -- Link print services → machine + service supply
+  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_short WHERE id = ps_bw_short;
+  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_a4    WHERE id = ps_bw_a4;
+  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_a4    WHERE id = ps_col_a4;
+  UPDATE print_services SET machine_id = mach_canon, service_supply_id = ss_photo WHERE id = ps_photo;
+  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_long  WHERE id = ps_bw_long;
+
+  -- =============================================
+  -- INVENTORY ITEMS — PRODUCTS (with stock_in_id)
+  -- =============================================
+  INSERT INTO inventory_items (product_id, stock, retail_price, reorder_level, location, last_restocked, stock_in_id) VALUES
+    (p_ypad, 48,  35.00,  10, 'Shelf A1', NOW() - INTERVAL '3 days',  si_ypad),
+    (p_pen,  120, 12.00,  20, 'Shelf A2', NOW() - INTERVAL '1 day',   si_pen),
+    (p_tape, 35,  25.00,  10, 'Shelf A3', NOW() - INTERVAL '5 days',  si_tape),
+    (p_pan,  200, 45.00,  30, 'Shelf B1', NOW() - INTERVAL '2 days',  si_pan),
+    (p_cof,  75,   8.00,  15, 'Shelf B2', NOW() - INTERVAL '4 days',  si_cof),
+    (p_mug,  5,  120.00,  10, 'Shelf C1', NOW() - INTERVAL '10 days', si_mug);
 
   SELECT id INTO inv_ypad FROM inventory_items WHERE product_id = p_ypad;
   SELECT id INTO inv_pen  FROM inventory_items WHERE product_id = p_pen;
@@ -170,7 +279,9 @@ BEGIN
   SELECT id INTO inv_cof  FROM inventory_items WHERE product_id = p_cof;
   SELECT id INTO inv_mug  FROM inventory_items WHERE product_id = p_mug;
 
-  -- Print orders
+  -- =============================================
+  -- PRINT ORDERS
+  -- =============================================
   INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin) VALUES
     (ps_bw_short, 10, false, 1,  50.00,  3.00,  2.00, 0.50,  5.50,  44.50),
     (ps_bw_short, 25, false, 2, 125.00,  7.50,  5.00, 1.25, 13.75, 111.25),
@@ -184,7 +295,9 @@ BEGIN
   SELECT id INTO po4 FROM print_orders WHERE service_id = ps_bw_a4    AND quantity = 50 LIMIT 1;
   SELECT id INTO po5 FROM print_orders WHERE service_id = ps_photo     AND quantity = 3  LIMIT 1;
 
-  -- Transactions
+  -- =============================================
+  -- TRANSACTIONS
+  -- =============================================
   INSERT INTO transactions (transaction_number, subtotal, total, date, status_id, payment_method_id, cashier_id, customer_id, notes, store_revenue, printing_revenue, total_cost, gross_profit) VALUES
     ('TXN-' || TO_CHAR(NOW(),                          'YYYYMMDD') || '-001', 223.00, 223.00, NOW() - INTERVAL '2 hours',        status_completed, pay_cash,  cashier_pid, cust1, 'Morning sale',      223.00,   0.00, 108.00, 115.00),
     ('TXN-' || TO_CHAR(NOW(),                          'YYYYMMDD') || '-002', 125.00, 125.00, NOW() - INTERVAL '1 hour',         status_completed, pay_gcash, cashier_pid, cust2, 'Student printing',    0.00, 125.00,  13.75, 111.25),
@@ -210,7 +323,9 @@ BEGIN
   SELECT id INTO txn10 FROM transactions WHERE transaction_number = 'TXN-' || TO_CHAR(NOW() - INTERVAL '3 days', 'YYYYMMDD') || '-002';
   SELECT id INTO txn11 FROM transactions WHERE transaction_number = 'TXN-' || TO_CHAR(NOW() - INTERVAL '5 days', 'YYYYMMDD') || '-001';
 
-  -- Transaction items
+  -- =============================================
+  -- TRANSACTION ITEMS
+  -- =============================================
   -- TXN-001 today: store items (₱223)
   INSERT INTO transaction_items (transaction_id, inventory_id, product_id, product_name, quantity, unit_price, subtotal, category_id, item_cost) VALUES
     (txn1, inv_pan,  p_pan,  'Pandesal (pack 12)',    2, 45.00, 90.00, 1, 50.00),
@@ -284,7 +399,22 @@ BEGIN
     (txn11, inv_pen,  p_pen,  'Ballpen Black',          3, 12.00,  37.00, 1, 14.00);
 
   -- =============================================
-  -- Expenses
+  -- STOCK_OUT records (sample — matching some transaction items)
+  -- =============================================
+  -- Capture a few transaction_item IDs for reference
+  SELECT id INTO ti_txn1_pan FROM transaction_items WHERE transaction_id = txn1 AND product_id = p_pan  LIMIT 1;
+  SELECT id INTO ti_txn1_cof FROM transaction_items WHERE transaction_id = txn1 AND product_id = p_cof  LIMIT 1;
+  SELECT id INTO ti_txn3_pan FROM transaction_items WHERE transaction_id = txn3 AND product_id = p_pan  LIMIT 1;
+
+  INSERT INTO stock_out (transaction_id, transaction_item_id, product_id, inventory_item_id, user_id, quantity_removed, stock_out_type, stock_out_date) VALUES
+    (txn1, ti_txn1_pan, p_pan, inv_pan, cashier_pid,  2, 'sale', NOW() - INTERVAL '2 hours'),
+    (txn1, ti_txn1_cof, p_cof, inv_cof, cashier_pid,  5, 'sale', NOW() - INTERVAL '2 hours'),
+    (txn3, ti_txn3_pan, p_pan, inv_pan, cashier_pid,  1, 'sale', NOW() - INTERVAL '30 minutes'),
+    -- Manual adjustment (waste/spoilage)
+    (NULL, NULL,        p_pan, inv_pan, owner_pid,     3, 'adjustment', NOW() - INTERVAL '3 days');
+
+  -- =============================================
+  -- EXPENSES
   -- expense_categories: 1=printing_ink, 2=printing_paper, 3=printing_electricity,
   --   4=printing_maintenance, 5=store_inventory, 6=utilities, 7=rent, 8=salaries, 9=supplies, 10=other
   -- =============================================
@@ -316,7 +446,24 @@ BEGIN
     ('Electricity cost - Photocopy B&W Short - 10 pages',  0.50, (SELECT id FROM expense_categories WHERE category_name = 'printing_electricity'), NOW() - INTERVAL '2 days 2 hours', 2, txn8),
     ('Maintenance cost - Photocopy B&W Short - 10 pages',  0.25, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW() - INTERVAL '2 days 2 hours', 2, txn8);
 
-  -- Activity logs
+  -- =============================================
+  -- LOGIN HISTORY
+  -- =============================================
+  INSERT INTO login_history (profile_id, username, login_time, logout_time) VALUES
+    (owner_pid,   'daniel_owner',  NOW() - INTERVAL '6 days 8 hours',  NOW() - INTERVAL '6 days 5 hours'),
+    (cashier_pid, 'maria_cashier', NOW() - INTERVAL '5 days 8 hours',  NOW() - INTERVAL '5 days 4 hours'),
+    (cashier_pid, 'maria_cashier', NOW() - INTERVAL '4 days 8 hours',  NOW() - INTERVAL '4 days 4 hours'),
+    (owner_pid,   'daniel_owner',  NOW() - INTERVAL '3 days 9 hours',  NOW() - INTERVAL '3 days 6 hours'),
+    (cashier_pid, 'maria_cashier', NOW() - INTERVAL '3 days 8 hours',  NOW() - INTERVAL '3 days 3 hours'),
+    (cashier_pid, 'maria_cashier', NOW() - INTERVAL '2 days 8 hours',  NOW() - INTERVAL '2 days 4 hours'),
+    (cashier_pid, 'maria_cashier', NOW() - INTERVAL '1 day 8 hours',   NOW() - INTERVAL '1 day 3 hours'),
+    (owner_pid,   'daniel_owner',  NOW() - INTERVAL '1 day 9 hours',   NOW() - INTERVAL '1 day 7 hours'),
+    -- Today: cashier still logged in (no logout_time)
+    (cashier_pid, 'maria_cashier', NOW() - INTERVAL '2 hours', NULL);
+
+  -- =============================================
+  -- ACTIVITY LOGS
+  -- =============================================
   INSERT INTO activity_logs (action_id, description, timestamp, performed_by, performed_by_id) VALUES
     ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱79.00',                   NOW() - INTERVAL '30 minutes',       'Maria Santos', cashier_pid),
     ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱125.00 (printing)',        NOW() - INTERVAL '1 hour',           'Maria Santos', cashier_pid),
