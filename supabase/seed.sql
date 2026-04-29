@@ -66,78 +66,76 @@ END $$;
 --    LOW STOCK: Mug (stock 3, reorder 5), Scotch Tape (stock 4, reorder 8), Folder Long (stock 3, reorder 5)
 --    OUT OF STOCK: Skyflakes Crackers (stock 0)
 -- =============================================
-INSERT INTO products (name, description, category_id, purchase_price, selling_price, perishable, sku) VALUES
-  ('Yellow Pad Short',          'Short bond yellow pad paper',          1, 18.00,  35.00, false, 'SKU-001'),
-  ('Ballpen Black',             'Black ballpoint pen',                  1,  4.00,  12.00, false, 'SKU-002'),
-  ('Correction Tape',           'White correction tape roller',         1, 11.00,  22.00, false, 'SKU-003'),
-  ('Pandesal (pack 12)',        'Fresh baked bread pack of 12',         1, 25.00,  45.00, true,  'SKU-004'),
-  ('Coffee 3-in-1 sachet',      'Instant 3-in-1 coffee sachet',         1,  4.00,   8.00, true,  'SKU-005'),
-  ('Mug (ceramic white)',       'Plain white ceramic mug',              1, 60.00, 120.00, false, 'SKU-006'),
-  ('Skyflakes Crackers',        'Skyflakes cracker biscuits (1 pack)',  1,  8.00,  15.00, true,  'SKU-007'),
-  ('Lucky Me Cup Noodles',      'Instant cup noodles (any flavor)',     1, 14.00,  25.00, true,  'SKU-008'),
-  ('Scotch Tape',               'Clear adhesive scotch tape',           1,  8.00,  15.00, false, 'SKU-009'),
-  ('Stapler',                   'Heavy-duty desktop stapler',           1, 55.00,  95.00, false, 'SKU-010'),
-  ('Folder Long',               'Plastic long document folder',         1,  7.00,  12.00, false, 'SKU-011'),
-  ('Mineral Water 500ml',       'Purified mineral water 500ml',         1, 12.00,  20.00, true,  'SKU-012'),
-  ('Coca-Cola 500ml',           'Coca-Cola regular 500ml bottle',       1, 22.00,  35.00, true,  'SKU-013'),
-  ('Alcohol 70% 250ml',         'Isopropyl alcohol 70% solution',       1, 40.00,  65.00, false, 'SKU-014'),
-  ('Notebook Spiral (80L)',     'Spiral notebook 80 leaves',            1, 30.00,  55.00, false, 'SKU-015');
+INSERT INTO products (name, product_category, product_type, purchase_price, selling_price) VALUES
+  ('Yellow Pad Short',       'Stationery',       'Paper',         18.00,  35.00),
+  ('Ballpen Black',          'Stationery',       'Writing Tool',   4.00,  12.00),
+  ('Correction Tape',        'Stationery',       'Correction',    11.00,  22.00),
+  ('Pandesal (pack 12)',     'Food & Beverage',  'Bakery',        25.00,  45.00),
+  ('Coffee 3-in-1 sachet',   'Food & Beverage',  'Beverage',       4.00,   8.00),
+  ('Mug (ceramic white)',    'Household',        'Drinkware',     60.00, 120.00),
+  ('Skyflakes Crackers',     'Food & Beverage',  'Snack',          8.00,  15.00),
+  ('Lucky Me Cup Noodles',   'Food & Beverage',  'Instant Meal',  14.00,  25.00),
+  ('Scotch Tape',            'Stationery',       'Adhesive',       8.00,  15.00),
+  ('Stapler',                'Stationery',       'Binding',       55.00,  95.00),
+  ('Folder Long',            'Stationery',       'Filing',         7.00,  12.00),
+  ('Mineral Water 500ml',    'Food & Beverage',  'Beverage',      12.00,  20.00),
+  ('Coca-Cola 500ml',        'Food & Beverage',  'Beverage',      22.00,  35.00),
+  ('Alcohol 70% 250ml',      'Health & Hygiene', 'Sanitizer',     40.00,  65.00),
+  ('Notebook Spiral (80L)',  'Stationery',       'Notebook',      30.00,  55.00);
 
 -- =============================================
--- 3. PRINT SERVICES
+-- 3. SERVICE SUPPLIES
 -- =============================================
-INSERT INTO print_services (name, description, paper_size_id, color_mode_id, base_price, ink_cost_per_page, paper_cost_per_page, electricity_cost_per_page, maintenance_cost_per_page, total_cost_per_page) VALUES
-  ('Photocopy B&W Short', 'Black and white photocopy on short bond', 1, 1,  3.00, 0.20, 0.10, 0.02, 0.01, 0.33),
-  ('Print B&W A4',        'Black and white print on A4 bond',        3, 1,  3.00, 0.20, 0.10, 0.02, 0.01, 0.33),
-  ('Print Colored A4',    'Full color print on A4 bond',             3, 2, 10.00, 1.50, 0.15, 0.05, 0.05, 1.75),
-  ('Print Photo 4R',      'Photo print on 4R glossy paper',          3, 2, 20.00, 3.00, 1.00, 0.10, 0.10, 4.20),
-  ('Photocopy B&W Long',  'Black and white photocopy on long bond',  2, 1,  4.00, 0.20, 0.15, 0.02, 0.01, 0.38);
+INSERT INTO service_supplies (name, supply_type, paper_size, purchase_price) VALUES
+  ('Short Bond Paper (Ream)',   'paper', 'short', 160.00),
+  ('Long Bond Paper (Ream)',    'paper', 'long',  180.00),
+  ('A4 Bond Paper (Ream)',      'paper', 'a4',    160.00),
+  ('Glossy Photo Paper (Pack)', 'paper', 'a4',    350.00),
+  ('Epson Black Ink (T664)',    'ink',   NULL,    280.00),
+  ('Epson Cyan Ink (T664)',     'ink',   NULL,    320.00),
+  ('Epson Magenta Ink (T664)',  'ink',   NULL,    320.00),
+  ('Epson Yellow Ink (T664)',   'ink',   NULL,    320.00);
 
 -- =============================================
--- 4. SERVICE SUPPLIES (with unit field)
+-- 4. SERVICES
 -- =============================================
-INSERT INTO service_supplies (name, supply_type, paper_size, purchase_price, unit) VALUES
-  ('Short Bond Paper (Ream)',   'paper', 'short', 160.00, 'ream'),
-  ('Long Bond Paper (Ream)',    'paper', 'long',  180.00, 'ream'),
-  ('A4 Bond Paper (Ream)',      'paper', 'a4',    160.00, 'ream'),
-  ('Glossy Photo Paper (Pack)', 'paper', 'a4',    350.00, 'pack'),
-  ('Epson Black Ink (T664)',    'ink',   NULL,    280.00, 'bottle'),
-  ('Epson Cyan Ink (T664)',     'ink',   NULL,    320.00, 'bottle'),
-  ('Epson Magenta Ink (T664)',  'ink',   NULL,    320.00, 'bottle'),
-  ('Epson Yellow Ink (T664)',   'ink',   NULL,    320.00, 'bottle');
+INSERT INTO services (name) VALUES
+  ('Photocopy'),
+  ('Document Printing'),
+  ('Photo Printing');
 
 -- =============================================
 -- 5. MACHINES
 -- =============================================
-INSERT INTO machines (name, is_active) VALUES
-  ('Epson L3110 (BW/Color)', true),
-  ('Canon PIXMA iP110',      true),
-  ('Epson L120 (Backup)',    false);
+INSERT INTO machines (name, is_active, service_id) VALUES
+  ('Epson L3110 (BW/Color)', true,  (SELECT id FROM services WHERE name = 'Document Printing')),
+  ('Canon PIXMA iP110',      true,  (SELECT id FROM services WHERE name = 'Photo Printing')),
+  ('Epson L120 (Backup)',    false, NULL);
 
 -- =============================================
 -- 6. CUSTOMERS (10)
 -- =============================================
 INSERT INTO customers (name, email, phone, address, notes) VALUES
-  ('Juan Dela Cruz',    'juan@email.com',        '09181112222', 'Brgy. Panangan, Magpet, N. Cotabato',   'Regular customer'),
-  ('Ana Reyes',         'ana.reyes@email.com',   '09193334444', 'Brgy. Datu Ladayon, Magpet, N. Cotabato', 'Student - bulk printing'),
-  ('Pedro Garcia',      'pedro.g@email.com',     '09205556666', 'Brgy. Sto. Niño, Magpet, N. Cotabato', NULL),
-  ('Rosa Mendoza',      'rosa.m@email.com',       '09217778888', 'Brgy. Palacat, Magpet, N. Cotabato',   'Nearby sari-sari owner'),
-  ('Carlos Tan',        'carlos.t@email.com',    '09229990000', 'Brgy. Malugon, Magpet, N. Cotabato',   'Office supplies buyer'),
+  ('Juan Dela Cruz',    'juan@email.com',        '09181112222', 'Brgy. Panangan, Magpet, N. Cotabato',        'Regular customer'),
+  ('Ana Reyes',         'ana.reyes@email.com',   '09193334444', 'Brgy. Datu Ladayon, Magpet, N. Cotabato',   'Student - bulk printing'),
+  ('Pedro Garcia',      'pedro.g@email.com',     '09205556666', 'Brgy. Sto. Niño, Magpet, N. Cotabato',      NULL),
+  ('Rosa Mendoza',      'rosa.m@email.com',      '09217778888', 'Brgy. Palacat, Magpet, N. Cotabato',        'Nearby sari-sari owner'),
+  ('Carlos Tan',        'carlos.t@email.com',    '09229990000', 'Brgy. Malugon, Magpet, N. Cotabato',        'Office supplies buyer'),
   ('Nena Villanueva',   'nena.v@email.com',      '09231231234', 'Brgy. New Pontevedra, Magpet, N. Cotabato', 'Teacher'),
-  ('Rodrigo Bautista',  'rod.b@email.com',        '09342342345', 'Brgy. Dado, Magpet, N. Cotabato',     NULL),
-  ('Carla Fernandez',   'carla.f@email.com',     '09453453456', 'Brgy. Kibugtongan, Magpet, N. Cotabato', 'Thesis printing - bulk'),
-  ('Manny Torres',      'manny.t@email.com',     '09564564567', 'Brgy. Banayal, Magpet, N. Cotabato',   NULL),
-  ('Grace Ocampo',      'grace.o@email.com',     '09675675678', 'Brgy. New Maasin, Magpet, N. Cotabato', 'Monthly bulk buyer');
+  ('Rodrigo Bautista',  'rod.b@email.com',       '09342342345', 'Brgy. Dado, Magpet, N. Cotabato',           NULL),
+  ('Carla Fernandez',   'carla.f@email.com',     '09453453456', 'Brgy. Kibugtongan, Magpet, N. Cotabato',    'Thesis printing - bulk'),
+  ('Manny Torres',      'manny.t@email.com',     '09564564567', 'Brgy. Banayal, Magpet, N. Cotabato',        NULL),
+  ('Grace Ocampo',      'grace.o@email.com',     '09675675678', 'Brgy. New Maasin, Magpet, N. Cotabato',     'Monthly bulk buyer');
 
 -- =============================================
 -- 7. ADDITIONAL VENDORS
 --    (PrintSari Corner is already seeded by the migration)
 -- =============================================
 INSERT INTO vendors (name, contact_number, email, address) VALUES
-  ('Metro Wholesale Center',  '08222001122', 'orders@metrowholesale.ph',  'General Santos City, South Cotabato'),
-  ('National Bookstore',      '08001234567', 'orders@nationalbookstore.ph', 'Kidapawan City, North Cotabato'),
-  ('Puregold Supermarket',    '08223344556', NULL,                          'Kidapawan City, North Cotabato'),
-  ('Epson Philippines',       '028781888',  'support@epson.com.ph',        'Makati City, Metro Manila');
+  ('Metro Wholesale Center', '08222001122', 'orders@metrowholesale.ph',   'General Santos City, South Cotabato'),
+  ('National Bookstore',     '08001234567', 'orders@nationalbookstore.ph', 'Kidapawan City, North Cotabato'),
+  ('Puregold Supermarket',   '08223344556', NULL,                          'Kidapawan City, North Cotabato'),
+  ('Epson Philippines',      '028781888',   'support@epson.com.ph',        'Makati City, Metro Manila');
 
 -- =============================================
 -- 8. ACTIVITY ACTIONS
@@ -156,8 +154,8 @@ INSERT INTO activity_actions (action_name, category) VALUES
 ON CONFLICT DO NOTHING;
 
 -- =============================================
--- 9. INVENTORY, STOCK_IN, PRINT ORDERS,
---    TRANSACTIONS, EXPENSES, LOGS
+-- 9. INVENTORY, STOCK_IN, SERVICE TYPES,
+--    PRINT ORDERS, TRANSACTIONS, EXPENSES, LOGS
 -- =============================================
 DO $$
 DECLARE
@@ -179,10 +177,14 @@ DECLARE
   -- Supply inventory IDs
   inv_ss_short int8; inv_ss_long int8; inv_ss_a4  int8; inv_ss_photo int8;
   inv_ss_bk    int8; inv_ss_cy   int8; inv_ss_mg  int8; inv_ss_yw    int8;
-  -- Print service IDs
-  ps_bw_short int8; ps_bw_a4 int8; ps_col_a4 int8; ps_photo int8; ps_bw_long int8;
+  -- Service IDs
+  svc_photo_copy int8; svc_doc_print int8; svc_photo_print int8;
   -- Machine IDs
   mach_epson int8; mach_canon int8;
+  -- Service type IDs
+  st_copy_bw_short int8; st_copy_bw_long int8;
+  st_print_bw_a4   int8; st_print_col_a4 int8;
+  st_print_photo   int8;
   -- Print order IDs (po1-po8)
   po1 int8; po2 int8; po3 int8; po4 int8;
   po5 int8; po6 int8; po7 int8; po8 int8;
@@ -211,22 +213,22 @@ BEGIN
   SELECT id INTO pay_gcash FROM payment_methods WHERE method_name = 'gcash';
   SELECT id INTO pay_card  FROM payment_methods WHERE method_name = 'card';
 
-  -- Resolve product IDs
-  SELECT id INTO p_ypad     FROM products WHERE sku = 'SKU-001';
-  SELECT id INTO p_pen      FROM products WHERE sku = 'SKU-002';
-  SELECT id INTO p_tape     FROM products WHERE sku = 'SKU-003';
-  SELECT id INTO p_pan      FROM products WHERE sku = 'SKU-004';
-  SELECT id INTO p_cof      FROM products WHERE sku = 'SKU-005';
-  SELECT id INTO p_mug      FROM products WHERE sku = 'SKU-006';
-  SELECT id INTO p_sky      FROM products WHERE sku = 'SKU-007';
-  SELECT id INTO p_noodle   FROM products WHERE sku = 'SKU-008';
-  SELECT id INTO p_scotch   FROM products WHERE sku = 'SKU-009';
-  SELECT id INTO p_stapler  FROM products WHERE sku = 'SKU-010';
-  SELECT id INTO p_folder   FROM products WHERE sku = 'SKU-011';
-  SELECT id INTO p_water    FROM products WHERE sku = 'SKU-012';
-  SELECT id INTO p_cola     FROM products WHERE sku = 'SKU-013';
-  SELECT id INTO p_alcohol  FROM products WHERE sku = 'SKU-014';
-  SELECT id INTO p_notebook FROM products WHERE sku = 'SKU-015';
+  -- Resolve product IDs (by name)
+  SELECT id INTO p_ypad     FROM products WHERE name = 'Yellow Pad Short';
+  SELECT id INTO p_pen      FROM products WHERE name = 'Ballpen Black';
+  SELECT id INTO p_tape     FROM products WHERE name = 'Correction Tape';
+  SELECT id INTO p_pan      FROM products WHERE name = 'Pandesal (pack 12)';
+  SELECT id INTO p_cof      FROM products WHERE name = 'Coffee 3-in-1 sachet';
+  SELECT id INTO p_mug      FROM products WHERE name = 'Mug (ceramic white)';
+  SELECT id INTO p_sky      FROM products WHERE name = 'Skyflakes Crackers';
+  SELECT id INTO p_noodle   FROM products WHERE name = 'Lucky Me Cup Noodles';
+  SELECT id INTO p_scotch   FROM products WHERE name = 'Scotch Tape';
+  SELECT id INTO p_stapler  FROM products WHERE name = 'Stapler';
+  SELECT id INTO p_folder   FROM products WHERE name = 'Folder Long';
+  SELECT id INTO p_water    FROM products WHERE name = 'Mineral Water 500ml';
+  SELECT id INTO p_cola     FROM products WHERE name = 'Coca-Cola 500ml';
+  SELECT id INTO p_alcohol  FROM products WHERE name = 'Alcohol 70% 250ml';
+  SELECT id INTO p_notebook FROM products WHERE name = 'Notebook Spiral (80L)';
 
   -- Resolve service supply IDs
   SELECT id INTO ss_short FROM service_supplies WHERE name = 'Short Bond Paper (Ream)';
@@ -238,12 +240,10 @@ BEGIN
   SELECT id INTO ss_mg    FROM service_supplies WHERE name = 'Epson Magenta Ink (T664)';
   SELECT id INTO ss_yw    FROM service_supplies WHERE name = 'Epson Yellow Ink (T664)';
 
-  -- Resolve print service IDs
-  SELECT id INTO ps_bw_short FROM print_services WHERE name = 'Photocopy B&W Short';
-  SELECT id INTO ps_bw_a4    FROM print_services WHERE name = 'Print B&W A4';
-  SELECT id INTO ps_col_a4   FROM print_services WHERE name = 'Print Colored A4';
-  SELECT id INTO ps_photo    FROM print_services WHERE name = 'Print Photo 4R';
-  SELECT id INTO ps_bw_long  FROM print_services WHERE name = 'Photocopy B&W Long';
+  -- Resolve service IDs
+  SELECT id INTO svc_photo_copy   FROM services WHERE name = 'Photocopy';
+  SELECT id INTO svc_doc_print    FROM services WHERE name = 'Document Printing';
+  SELECT id INTO svc_photo_print  FROM services WHERE name = 'Photo Printing';
 
   -- Resolve machine IDs
   SELECT id INTO mach_epson FROM machines WHERE name = 'Epson L3110 (BW/Color)';
@@ -385,12 +385,48 @@ BEGIN
   SELECT id INTO inv_ss_mg    FROM inventory_items WHERE service_supply_id = ss_mg;
   SELECT id INTO inv_ss_yw    FROM inventory_items WHERE service_supply_id = ss_yw;
 
-  -- Link print services → machine + supply
-  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_short WHERE id = ps_bw_short;
-  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_a4    WHERE id = ps_bw_a4;
-  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_a4    WHERE id = ps_col_a4;
-  UPDATE print_services SET machine_id = mach_canon, service_supply_id = ss_photo WHERE id = ps_photo;
-  UPDATE print_services SET machine_id = mach_epson, service_supply_id = ss_long  WHERE id = ps_bw_long;
+  -- =============================================
+  -- SERVICE TYPES
+  --   Each service_type = one printable variant
+  --   (replaces old print_services rows)
+  -- =============================================
+  INSERT INTO service_types (service_id, machine_id, service_supply_id, name, paper_size, color_mode)
+  VALUES (svc_photo_copy,  mach_epson, ss_short, 'Photocopy B&W Short', 'Short', 'Black & White')
+  RETURNING id INTO st_copy_bw_short;
+
+  INSERT INTO service_types (service_id, machine_id, service_supply_id, name, paper_size, color_mode)
+  VALUES (svc_photo_copy,  mach_epson, ss_long,  'Photocopy B&W Long',  'Long',  'Black & White')
+  RETURNING id INTO st_copy_bw_long;
+
+  INSERT INTO service_types (service_id, machine_id, service_supply_id, name, paper_size, color_mode)
+  VALUES (svc_doc_print,   mach_epson, ss_a4,    'Print B&W A4',        'A4',    'Black & White')
+  RETURNING id INTO st_print_bw_a4;
+
+  INSERT INTO service_types (service_id, machine_id, service_supply_id, name, paper_size, color_mode)
+  VALUES (svc_doc_print,   mach_epson, ss_a4,    'Print Colored A4',    'A4',    'Full Color')
+  RETURNING id INTO st_print_col_a4;
+
+  INSERT INTO service_types (service_id, machine_id, service_supply_id, name, paper_size, color_mode)
+  VALUES (svc_photo_print, mach_canon, ss_photo, 'Print Photo 4R',      '4R',    'Full Color')
+  RETURNING id INTO st_print_photo;
+
+  -- =============================================
+  -- SERVICE TYPE COSTS
+  --   service_total_cost is GENERATED ALWAYS AS
+  --   (supply + ink + electricity + labor) STORED
+  --
+  --   Photocopy B&W Short: sell=3.00/p, supply=0.10, ink=0.20, elec=0.02, labor=0.01 → total=0.33
+  --   Photocopy B&W Long:  sell=4.00/p, supply=0.15, ink=0.20, elec=0.02, labor=0.01 → total=0.38
+  --   Print B&W A4:        sell=3.00/p, supply=0.10, ink=0.20, elec=0.02, labor=0.01 → total=0.33
+  --   Print Colored A4:    sell=10.00/p,supply=0.15, ink=1.50, elec=0.05, labor=0.05 → total=1.75
+  --   Print Photo 4R:      sell=20.00/p,supply=1.00, ink=3.00, elec=0.10, labor=0.10 → total=4.20
+  -- =============================================
+  INSERT INTO service_type_costs (service_type_id, service_supply_cost, ink_cost, electricity_cost, labor_cost, service_selling_price) VALUES
+    (st_copy_bw_short, 0.10, 0.20, 0.02, 0.01,  3.00),
+    (st_copy_bw_long,  0.15, 0.20, 0.02, 0.01,  4.00),
+    (st_print_bw_a4,   0.10, 0.20, 0.02, 0.01,  3.00),
+    (st_print_col_a4,  0.15, 1.50, 0.05, 0.05, 10.00),
+    (st_print_photo,   1.00, 3.00, 0.10, 0.10, 20.00);
 
   -- =============================================
   -- PRINT ORDERS (8 reusable templates)
@@ -403,31 +439,31 @@ BEGIN
   --   po7: Photo 4R  10p  = ₱200, cost ₱42.00
   --   po8: B&W Long  20p  = ₱80,  cost ₱7.60
   -- =============================================
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_bw_short, 30, false, 1,  90.00,  6.00,  3.00, 0.60,  9.90,  80.10) RETURNING id INTO po1;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_bw_a4,    50, false, 1, 150.00, 10.00,  5.00, 1.00, 16.50, 133.50) RETURNING id INTO po2;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_bw_a4,   100, false, 1, 300.00, 20.00, 10.00, 2.00, 33.00, 267.00) RETURNING id INTO po3;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_col_a4,   10, false, 1, 100.00, 15.00,  1.50, 0.50, 17.50,  82.50) RETURNING id INTO po4;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_col_a4,   20, false, 1, 200.00, 30.00,  3.00, 1.00, 35.00, 165.00) RETURNING id INTO po5;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_photo,     5, false, 1, 100.00, 15.00,  5.00, 0.50, 21.00,  79.00) RETURNING id INTO po6;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_photo,    10, false, 1, 200.00, 30.00, 10.00, 1.00, 42.00, 158.00) RETURNING id INTO po7;
-  INSERT INTO print_orders (service_id, quantity, double_sided, copies, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
-  VALUES (ps_bw_long,  20, false, 1,  80.00,  4.00,  3.00, 0.40,  7.60,  72.40) RETURNING id INTO po8;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_copy_bw_short, 30,  90.00,  6.00,  3.00, 0.60,  9.90,  80.10) RETURNING id INTO po1;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_print_bw_a4,   50, 150.00, 10.00,  5.00, 1.00, 16.50, 133.50) RETURNING id INTO po2;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_print_bw_a4,  100, 300.00, 20.00, 10.00, 2.00, 33.00, 267.00) RETURNING id INTO po3;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_print_col_a4,  10, 100.00, 15.00,  1.50, 0.50, 17.50,  82.50) RETURNING id INTO po4;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_print_col_a4,  20, 200.00, 30.00,  3.00, 1.00, 35.00, 165.00) RETURNING id INTO po5;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_print_photo,    5, 100.00, 15.00,  5.00, 0.50, 21.00,  79.00) RETURNING id INTO po6;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_print_photo,   10, 200.00, 30.00, 10.00, 1.00, 42.00, 158.00) RETURNING id INTO po7;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, ink_used, paper_used, electricity_used, total_cost, profit_margin)
+  VALUES (st_copy_bw_long,  20,  80.00,  4.00,  3.00, 0.40,  7.60,  72.40) RETURNING id INTO po8;
 
   -- =============================================
   -- TRANSACTIONS (30 over 30 days)
   --   Revenue legend: store_revenue + printing_revenue = total
   --   Bundles used:
-  --     Medium:  pan×2(90)+cof×5(40)+water×3(60)         = ₱190, cost ₱106
-  --     Large:   pan×4(180)+cof×8(64)+water×5(100)       = ₱344, cost ₱192
-  --     Small:   pan×1(45)+cof×3(24)+pen×2(24)           = ₱93,  cost ₱45
-  --     Station: ypad×2(70)+pen×5(60)+tape×2(44)+nb×1(55)= ₱229, cost ₱124
+  --     Medium:  pan×2(90)+cof×5(40)+water×3(60)          = ₱190, cost ₱106
+  --     Large:   pan×4(180)+cof×8(64)+water×5(100)        = ₱344, cost ₱192
+  --     Small:   pan×1(45)+cof×3(24)+pen×2(24)            = ₱93,  cost ₱45
+  --     Station: ypad×2(70)+pen×5(60)+tape×2(44)+nb×1(55) = ₱229, cost ₱124
   -- =============================================
 
   -- D28: Medium store ₱190
@@ -805,25 +841,25 @@ BEGIN
     ('Ink cost — Print B&W A4 100p',   20.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_ink'),         NOW()-INTERVAL'27 days 10 hours', 2, txn2),
     ('Paper cost — Print B&W A4 100p', 10.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_paper'),       NOW()-INTERVAL'27 days 10 hours', 2, txn2),
     ('Elec cost — Print B&W A4 100p',   2.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_electricity'), NOW()-INTERVAL'27 days 10 hours', 2, txn2),
-    ('Maint cost — Print B&W A4 100p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'27 days 10 hours', 2, txn2);
+    ('Labor cost — Print B&W A4 100p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'27 days 10 hours', 2, txn2);
 
   INSERT INTO expenses (description, amount, category_id, date, source_id, linked_transaction_id) VALUES
     ('Ink cost — Print Photo 4R 10p',   30.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_ink'),         NOW()-INTERVAL'18 days 2 hours', 2, txn11),
     ('Paper cost — Print Photo 4R 10p', 10.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_paper'),       NOW()-INTERVAL'18 days 2 hours', 2, txn11),
     ('Elec cost — Print Photo 4R 10p',   1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_electricity'), NOW()-INTERVAL'18 days 2 hours', 2, txn11),
-    ('Maint cost — Print Photo 4R 10p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'18 days 2 hours', 2, txn11);
+    ('Labor cost — Print Photo 4R 10p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'18 days 2 hours', 2, txn11);
 
   INSERT INTO expenses (description, amount, category_id, date, source_id, linked_transaction_id) VALUES
     ('Ink cost — Print B&W A4 100p',   20.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_ink'),         NOW()-INTERVAL'14 days 10 hours', 2, txn15),
     ('Paper cost — Print B&W A4 100p', 10.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_paper'),       NOW()-INTERVAL'14 days 10 hours', 2, txn15),
     ('Elec cost — Print B&W A4 100p',   2.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_electricity'), NOW()-INTERVAL'14 days 10 hours', 2, txn15),
-    ('Maint cost — Print B&W A4 100p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'14 days 10 hours', 2, txn15);
+    ('Labor cost — Print B&W A4 100p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'14 days 10 hours', 2, txn15);
 
   INSERT INTO expenses (description, amount, category_id, date, source_id, linked_transaction_id) VALUES
     ('Ink cost — Print B&W A4 100p',   20.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_ink'),         NOW()-INTERVAL'3 hours', 2, txn29),
     ('Paper cost — Print B&W A4 100p', 10.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_paper'),       NOW()-INTERVAL'3 hours', 2, txn29),
     ('Elec cost — Print B&W A4 100p',   2.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_electricity'), NOW()-INTERVAL'3 hours', 2, txn29),
-    ('Maint cost — Print B&W A4 100p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'3 hours', 2, txn29);
+    ('Labor cost — Print B&W A4 100p',  1.00, (SELECT id FROM expense_categories WHERE category_name = 'printing_maintenance'), NOW()-INTERVAL'3 hours', 2, txn29);
 
   -- =============================================
   -- LOGIN HISTORY
@@ -858,25 +894,25 @@ BEGIN
   -- ACTIVITY LOGS
   -- =============================================
   INSERT INTO activity_logs (action_id, description, timestamp, performed_by, performed_by_id) VALUES
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱190.00',                      NOW()-INTERVAL'1 hour',             'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed print job — ₱300.00 (B&W A4 100p)',   NOW()-INTERVAL'3 hours',            'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Print Order Created'   LIMIT 1), 'Print order: B&W A4 100 pages',                  NOW()-INTERVAL'3 hours 2 minutes',  'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱190.00',                      NOW()-INTERVAL'1 day 9 hours',      'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Internet — ₱1,500.00',         NOW()-INTERVAL'1 day',              'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱344.00',                      NOW()-INTERVAL'4 days 8 hours',     'Pedro Garcia',   cashier2_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed print job — ₱300.00 (thesis)',         NOW()-INTERVAL'7 days 10 hours',    'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Electricity — ₱2,500.00',      NOW()-INTERVAL'7 days',             'Jose Reyes',     manager_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Inventory Restocked'   LIMIT 1), 'Restocked A4 Bond Paper: +10 reams',             NOW()-INTERVAL'8 days',             'Jose Reyes',     manager_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱494.00 (bulk + printing)',     NOW()-INTERVAL'10 days 11 hours',   'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Store restock — ₱3,800.00',    NOW()-INTERVAL'11 days',            'Jose Reyes',     manager_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱190.00',                      NOW()-INTERVAL'1 hour',             'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed print job — ₱300.00 (B&W A4 100p)',   NOW()-INTERVAL'3 hours',            'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Print Order Created'   LIMIT 1), 'Print order: B&W A4 100 pages',                  NOW()-INTERVAL'3 hours 2 minutes',  'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱190.00',                      NOW()-INTERVAL'1 day 9 hours',      'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Internet — ₱1,500.00',         NOW()-INTERVAL'1 day',              'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱344.00',                      NOW()-INTERVAL'4 days 8 hours',     'Pedro Garcia',        cashier2_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed print job — ₱300.00 (thesis)',         NOW()-INTERVAL'7 days 10 hours',    'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Electricity — ₱2,500.00',      NOW()-INTERVAL'7 days',             'Jose Reyes',          manager_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Inventory Restocked'   LIMIT 1), 'Restocked A4 Bond Paper: +10 reams',             NOW()-INTERVAL'8 days',             'Jose Reyes',          manager_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed sale — ₱494.00 (bulk + printing)',     NOW()-INTERVAL'10 days 11 hours',   'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Store restock — ₱3,800.00',    NOW()-INTERVAL'11 days',            'Jose Reyes',          manager_pid),
     ((SELECT id FROM activity_actions WHERE action_name = 'Inventory Adjusted'    LIMIT 1), 'Stock adjustment: Skyflakes Crackers -15 (spoilage)', NOW()-INTERVAL'10 days',       'Daniel David Lupase', owner_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed print job — ₱490.00 (research paper)', NOW()-INTERVAL'14 days 10 hours',  'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Customer Registered'   LIMIT 1), 'New customer: Grace Ocampo',                     NOW()-INTERVAL'15 days',            'Maria Santos',   cashier_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Printer inks — ₱4,000.00',     NOW()-INTERVAL'19 days',            'Jose Reyes',     manager_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Printer paper — ₱2,880.00',    NOW()-INTERVAL'22 days',            'Jose Reyes',     manager_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Transaction Completed' LIMIT 1), 'Completed print job — ₱490.00 (research paper)', NOW()-INTERVAL'14 days 10 hours',  'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Customer Registered'   LIMIT 1), 'New customer: Grace Ocampo',                     NOW()-INTERVAL'15 days',            'Maria Santos',        cashier_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Printer inks — ₱4,000.00',     NOW()-INTERVAL'19 days',            'Jose Reyes',          manager_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Printer paper — ₱2,880.00',    NOW()-INTERVAL'22 days',            'Jose Reyes',          manager_pid),
     ((SELECT id FROM activity_actions WHERE action_name = 'User Created'          LIMIT 1), 'New cashier account created: pedro_cashier',      NOW()-INTERVAL'25 days',            'Daniel David Lupase', owner_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Store restock — ₱7,700.00',    NOW()-INTERVAL'25 days',            'Jose Reyes',     manager_pid),
+    ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Store restock — ₱7,700.00',    NOW()-INTERVAL'25 days',            'Jose Reyes',          manager_pid),
     ((SELECT id FROM activity_actions WHERE action_name = 'Expense Recorded'      LIMIT 1), 'Recorded expense: Salaries — ₱25,000.00',        NOW()-INTERVAL'28 days',            'Daniel David Lupase', owner_pid),
-    ((SELECT id FROM activity_actions WHERE action_name = 'User Login'            LIMIT 1), 'User logged in',                                  NOW()-INTERVAL'4 hours',            'Maria Santos',   cashier_pid);
+    ((SELECT id FROM activity_actions WHERE action_name = 'User Login'            LIMIT 1), 'User logged in',                                  NOW()-INTERVAL'4 hours',            'Maria Santos',        cashier_pid);
 
 END $$;
