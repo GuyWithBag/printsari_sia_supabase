@@ -99,7 +99,15 @@ INSERT INTO service_supplies (name, supply_type, paper_size, purchase_price, sel
   ('Epson Yellow Ink (T664)',   'ink',   NULL,    0.50,  0.00);
 
 -- =============================================
--- 4. MACHINES
+-- 4. SERVICES
+-- =============================================
+INSERT INTO services (name) VALUES
+  ('B&W Document Printing'),
+  ('Color Document Printing'),
+  ('Photo Printing');
+
+-- =============================================
+-- 5. MACHINES
 -- =============================================
 INSERT INTO machines (name, is_active) VALUES
   ('Epson L3110 (BW/Color)', true),
@@ -107,7 +115,7 @@ INSERT INTO machines (name, is_active) VALUES
   ('Epson L120 (Backup)',    false);
 
 -- =============================================
--- 6. CUSTOMERS (10)
+-- 7. CUSTOMERS (10)
 -- =============================================
 INSERT INTO customers (name, email, phone, address, notes) VALUES
   ('Juan Dela Cruz',    'juan@email.com',        '09181112222', 'Brgy. Panangan, Magpet, N. Cotabato',        'Regular customer'),
@@ -172,6 +180,12 @@ DECLARE
   inv_ss_short int8; inv_ss_long int8; inv_ss_a4  int8; inv_ss_photo int8;
   inv_ss_bk    int8; inv_ss_cy   int8; inv_ss_mg  int8; inv_ss_yw    int8;
 
+  -- Service IDs
+  svc_bw int8; svc_color int8; svc_photo int8;
+  -- Machine IDs
+  m_l3110 int8; m_canon int8;
+  -- Service type IDs
+  st_bw_short int8; st_bw_long int8; st_bw_a4 int8; st_color_a4 int8; st_photo int8;
   -- Print order IDs (po1-po8)
   po1 int8; po2 int8; po3 int8; po4 int8;
   po5 int8; po6 int8; po7 int8; po8 int8;
@@ -364,33 +378,84 @@ BEGIN
   SELECT id INTO inv_ss_yw    FROM inventory_items WHERE service_supply_id = ss_yw;
 
   -- =============================================
+  -- SERVICES, MACHINES, SERVICE TYPES & COSTS
+  -- =============================================
+  -- Resolve service IDs
+  SELECT id INTO svc_bw    FROM services WHERE name = 'B&W Document Printing';
+  SELECT id INTO svc_color FROM services WHERE name = 'Color Document Printing';
+  SELECT id INTO svc_photo FROM services WHERE name = 'Photo Printing';
+
+  -- Resolve machine IDs
+  SELECT id INTO m_l3110 FROM machines WHERE name = 'Epson L3110 (BW/Color)';
+  SELECT id INTO m_canon FROM machines WHERE name = 'Canon PIXMA iP110';
+
+  -- Link machines to their primary service
+  UPDATE machines SET service_id = svc_bw    WHERE id = m_l3110;
+  UPDATE machines SET service_id = svc_photo WHERE id = m_canon;
+
+  -- Insert service types
+  INSERT INTO service_types (service_id, service_supply_id, machine_id, name, paper_size, color_mode)
+  VALUES (svc_bw,    ss_short, m_l3110, 'B&W Short',  'short', 'bw')
+  RETURNING id INTO st_bw_short;
+
+  INSERT INTO service_types (service_id, service_supply_id, machine_id, name, paper_size, color_mode)
+  VALUES (svc_bw,    ss_long,  m_l3110, 'B&W Long',   'long',  'bw')
+  RETURNING id INTO st_bw_long;
+
+  INSERT INTO service_types (service_id, service_supply_id, machine_id, name, paper_size, color_mode)
+  VALUES (svc_bw,    ss_a4,    m_l3110, 'B&W A4',     'a4',    'bw')
+  RETURNING id INTO st_bw_a4;
+
+  INSERT INTO service_types (service_id, service_supply_id, machine_id, name, paper_size, color_mode)
+  VALUES (svc_color, ss_a4,    m_l3110, 'Color A4',   'a4',    'color')
+  RETURNING id INTO st_color_a4;
+
+  INSERT INTO service_types (service_id, service_supply_id, machine_id, name, paper_size, color_mode)
+  VALUES (svc_photo, ss_photo, m_canon, 'Photo 4R',   'a4',    'color')
+  RETURNING id INTO st_photo;
+
+  -- Insert service type costs (per-page rates)
+  --   B&W Short:  supply=0.33, ink=0.00, elec=0.00, labor=0.00, total=0.33, selling=3.00
+  --   B&W Long:   supply=0.38, ink=0.00, elec=0.00, labor=0.00, total=0.38, selling=4.00
+  --   B&W A4:     supply=0.33, ink=0.00, elec=0.00, labor=0.00, total=0.33, selling=3.00
+  --   Color A4:   supply=0.33, ink=1.20, elec=0.10, labor=0.12, total=1.75, selling=10.00
+  --   Photo 4R:   supply=4.20, ink=0.00, elec=0.00, labor=0.00, total=4.20, selling=20.00
+  INSERT INTO service_type_costs (service_type_id, service_supply_cost, ink_cost, electricity_cost, labor_cost, service_selling_price)
+  VALUES
+    (st_bw_short,  0.33, 0.00, 0.00, 0.00,  3.00),
+    (st_bw_long,   0.38, 0.00, 0.00, 0.00,  4.00),
+    (st_bw_a4,     0.33, 0.00, 0.00, 0.00,  3.00),
+    (st_color_a4,  0.33, 1.20, 0.10, 0.12, 10.00),
+    (st_photo,     4.20, 0.00, 0.00, 0.00, 20.00);
+
+  -- =============================================
   -- PRINT ORDERS (8 reusable templates)
-  --   service_supply_id → the supply used per page
+  --   service_type_id → the service type used
   --   po1: B&W Short 30p  = ₱90,  cost ₱9.90
   --   po2: B&W A4    50p  = ₱150, cost ₱16.50
   --   po3: B&W A4   100p  = ₱300, cost ₱33.00
-  --   po4: Colored   10p  = ₱100, cost ₱17.50
-  --   po5: Colored   20p  = ₱200, cost ₱35.00
+  --   po4: Color A4  10p  = ₱100, cost ₱17.50
+  --   po5: Color A4  20p  = ₱200, cost ₱35.00
   --   po6: Photo 4R   5p  = ₱100, cost ₱21.00
   --   po7: Photo 4R  10p  = ₱200, cost ₱42.00
   --   po8: B&W Long  20p  = ₱80,  cost ₱7.60
   -- =============================================
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_short,  30,  90.00,  9.90,  80.10) RETURNING id INTO po1;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_a4,     50, 150.00, 16.50, 133.50) RETURNING id INTO po2;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_a4,    100, 300.00, 33.00, 267.00) RETURNING id INTO po3;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_a4,     10, 100.00, 17.50,  82.50) RETURNING id INTO po4;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_a4,     20, 200.00, 35.00, 165.00) RETURNING id INTO po5;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_photo,   5, 100.00, 21.00,  79.00) RETURNING id INTO po6;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_photo,  10, 200.00, 42.00, 158.00) RETURNING id INTO po7;
-  INSERT INTO print_orders (service_supply_id, quantity, total_price, total_cost, profit_margin)
-  VALUES (ss_long,   20,  80.00,  7.60,  72.40) RETURNING id INTO po8;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_bw_short,  30,  90.00,  9.90,  80.10) RETURNING id INTO po1;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_bw_a4,     50, 150.00, 16.50, 133.50) RETURNING id INTO po2;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_bw_a4,    100, 300.00, 33.00, 267.00) RETURNING id INTO po3;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_color_a4,  10, 100.00, 17.50,  82.50) RETURNING id INTO po4;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_color_a4,  20, 200.00, 35.00, 165.00) RETURNING id INTO po5;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_photo,      5, 100.00, 21.00,  79.00) RETURNING id INTO po6;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_photo,     10, 200.00, 42.00, 158.00) RETURNING id INTO po7;
+  INSERT INTO print_orders (service_type_id, quantity, total_price, total_cost, profit_margin)
+  VALUES (st_bw_long,   20,  80.00,  7.60,  72.40) RETURNING id INTO po8;
 
   -- =============================================
   -- TRANSACTIONS (30 over 30 days)
