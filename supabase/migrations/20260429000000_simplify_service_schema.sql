@@ -25,8 +25,11 @@ END $$;
 -- 3. Add is_archived to products
 ALTER TABLE products ADD COLUMN IF NOT EXISTS is_archived BOOLEAN NOT NULL DEFAULT false;
 
--- 4. Update print_orders: drop service_type_id, add service_supply_id
+-- 4. Update print_orders: drop service_type_id + old cost columns, add service_supply_id
 ALTER TABLE print_orders DROP COLUMN IF EXISTS service_type_id;
+ALTER TABLE print_orders DROP COLUMN IF EXISTS ink_used;
+ALTER TABLE print_orders DROP COLUMN IF EXISTS paper_used;
+ALTER TABLE print_orders DROP COLUMN IF EXISTS electricity_used;
 ALTER TABLE print_orders ADD COLUMN IF NOT EXISTS service_supply_id INT8 REFERENCES service_supplies(id) ON DELETE SET NULL;
 
 -- 5. Drop simplified-away tables (cascade removes FKs pointing to them)
